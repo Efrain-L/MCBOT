@@ -57,7 +57,7 @@ async def on_message(message):
     if message.content.startswith('~closeserver'):
         if checkServerPort() != 0:
             await message.channel.send('Closing the server...')
-            subprocess.Popen(r"C:\Pythons\MCBOT\serverclose.exe")
+            subprocess.Popen(r"C:\VSCode\Pythons\MCBOT\serverclose.exe")
             time.sleep(5)
             await message.channel.send('The Server has Been Closed')
         else:
