@@ -10,7 +10,6 @@ def checkServerPort():
     result_of_check = a_socket.connect_ex(location)
     a_socket.close()
     return result_of_check
-
 botChannel = 880520345348628501
 serverFile = r'C:\Users\efrai\Desktop\Minecraft\Server Files\Enigmatica6Server-0.5.9\start-server.bat'
 print('swag')
@@ -54,8 +53,14 @@ async def on_message(message):
                 await message.channel.send("The Server is now ready.")
             else:
                 await message.channel.send("The Server did not start in time (5 min elapsed).")
+    #close server command works!!
+    if message.content.startswith('~closeserver'):
+        if checkServerPort() != 0:
+            await message.channel.send('Closing the server...')
+            subprocess.Popen(r"C:\VSCode\Pythons\MCBOT\serverclose.exe")
+            time.sleep(5)
+            await message.channel.send('The Server has Been Closed')
+        else:
+            await message.channel.send("The Server is already closed.")
 
-            
-
-swag = 2
 client.run('ODc5NTc3NTQ4NTY3MjI0MzUw.YSRwbQ.7rGLFzxOXYCVFYmErrLMm4cL2oA')
