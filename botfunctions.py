@@ -30,33 +30,31 @@ async def startingServer(message):
         await message.channel.send("The Server is Already Running/Starting.")
     else:   
         #Server selection
-        serverFound = False
         commandList = message.content.split()
         if len(commandList) < 2:
-            await message.channel.send('Please specify the server you would like to start. (Enter ~options to see the server list.)')
+            #cmdlist will not have the specified server if split message length is < 2
+            await message.channel.send('Please specify the server you would like to start. (Enter ~options to see the server list)')
         else:
             #search for server entered
             searchfile = dir.serverList.get(commandList[1])
             if searchfile != None:
-                serverFound = True
                 await message.channel.send(f'Attempting to start the {commandList[1]} server...')
-                ##print(searchfile)
                 subprocess.Popen(searchfile, creationflags=subprocess.CREATE_NEW_CONSOLE)
                 #Starting server loop
                 maxTime = 0
+                #while loop will stop if the server is not up after 3 min
                 while checkServerPort() != 0 and maxTime != 180:
                     time.sleep(5)
                     maxTime += 5
-                    print(maxTime)
                 if checkServerPort() == 0:
                     await message.channel.send("The Server is now ready.")
                 else:
                     await message.channel.send("The Server did not start in time (3 min elapsed).")
             #not found msg
-            if serverFound == False:
+            else:
                 await message.channel.send('Could not find the server you searched for.')
 
-#showing the list of server
+#showing the list of server(s)
 async def showOptions(message):
     srvrNum = 0
     await message.channel.send('The list of servers:')
@@ -64,15 +62,12 @@ async def showOptions(message):
         srvrNum += 1
         await message.channel.send(f'*{srvrNum}: {eachOpt}*')
 
-#attempt to close the currently running server
+#close the currently running server
 async def closingServer(message):
-    if message.author.id in dir.validUsers:
-        if dir.checkServerPort() == 0:
-            await message.channel.send('Closing the server...')
-            subprocess.Popen(dir.closeFile)
-            time.sleep(5)
-            await message.channel.send('The Server has Been Closed')
-        else:
-            await message.channel.send("The Server is already closed.")
+    if checkServerPort() == 0:
+        await message.channel.send('Closing the server...')
+        subprocess.Popen(dir.closeFile)
+        time.sleep(5)
+        await message.channel.send('The Server has Been Closed')
     else:
-        await message.channel.send("You do not have permission to use this command.")
+        await message.channel.send("The Server is already closed.")
