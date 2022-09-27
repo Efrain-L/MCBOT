@@ -45,4 +45,4 @@ async def on_message(message):
         else:
             await message.channel.send('Command not recognized, use *~help* for valid commands')
             
-client.run('ODc5NTc3NTQ4NTY3MjI0MzUw.YSRwbQ.7rGLFzxOXYCVFYmErrLMm4cL2oA')
+client.run(TOKEN)
