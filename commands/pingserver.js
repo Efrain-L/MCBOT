@@ -30,6 +30,3 @@ async function ping() {
 		port: 25565,
 	});
 }
-
-// allowing other files to use this function
-module.exports = { ping };
