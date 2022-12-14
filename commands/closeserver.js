@@ -7,7 +7,7 @@ module.exports = {
 		.setName('closeserver')
 		.setDescription('Will close the Minecraft server.'),
 	async execute(interaction) {
-		await interaction.deferReply({ ephemeral: true });
+		await interaction.deferReply();
 		if (await ping() != 'running') {
 			await interaction.editReply('The server is already closed');
 		}

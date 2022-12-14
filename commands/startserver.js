@@ -7,7 +7,7 @@ module.exports = {
 		.setName('startserver')
 		.setDescription('Will start the Minecraft server.'),
 	async execute(interaction) {
-		await interaction.deferReply({ ephemeral: true });
+		await interaction.deferReply();
 		if (await ping() === 'already running') {
 			await interaction.editReply('The server is already running');
 		}
