@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { exec } = require('child_process');
-const { net } = require('net');
+const net = require('net');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -8,16 +8,16 @@ module.exports = {
 		.setDescription('Will start the Minecraft server.'),
 	async execute(interaction) {
 		await interaction.deferReply();
-		if (await ping() === 'already running') {
+		if (await ping() === 'running') {
 			await interaction.editReply('The server is already running');
 		}
 		else {
 			await startServer();
 			let time = 0;
 			let started = false;
-			while (time < 180) {
+			while (time < 240) {
 				console.log(`pinging (${time}s)...`);
-				if (await ping() == 'already running') {
+				if (await ping() == 'running') {
 					started = true;
 					await interaction.editReply('Server has started.');
 					break;
@@ -34,7 +34,7 @@ module.exports = {
 };
 
 async function startServer() {
-	exec('tmux send -t 0 "sh run.sh" ENTER');
+	exec('tmux send -t 0:0 "sh run.sh" ENTER');
 }
 
 function sleep(ms) {
@@ -46,8 +46,8 @@ const ping = async () => {
 		const s = net.createServer();
 		s.once('error', (err) => {
 			s.close();
-			if (err['code'] == 'EADDRINUSE') {
-				resolve('already running');
+			if (err.code === 'EADDRNOTAVAIL') {
+				resolve('running');
 			}
 			else {
 				resolve('closed');

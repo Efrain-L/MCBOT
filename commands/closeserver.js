@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { net } = require('net');
 const { exec } = require('child_process');
+const net = require('net');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -8,14 +8,14 @@ module.exports = {
 		.setDescription('Will close the Minecraft server.'),
 	async execute(interaction) {
 		await interaction.deferReply();
-		if (await ping() != 'running') {
+		if (await ping() !== 'running') {
 			await interaction.editReply('The server is already closed');
 		}
 		else {
 			await closeServer();
 			let time = 0;
 			let closed = false;
-			while (time < 180) {
+			while (time < 240) {
 				console.log(`pinging (${time}s)...`);
 				if (await ping() == 'closed') {
 					closed = true;
@@ -33,29 +33,32 @@ module.exports = {
 };
 
 async function closeServer() {
-	exec('tmux send -t 0 "stop" ENTER');
+	exec('tmux send -t 0:0 "stop" ENTER');
 }
 
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function ping() {
-	const server = net.createServer();
-	// if the port is being used
-	server.once('error', function(err) {
-		if (err.code === 'EADDRINUSE') {
-			return 'running';
-		}
+const ping = async () => {
+	return new Promise((resolve) => {
+		const s = net.createServer();
+		s.once('error', (err) => {
+			s.close();
+			if (err.code === 'EADDRNOTAVAIL') {
+				resolve('running');
+			}
+			else {
+				resolve('closed');
+			}
+		});
+		s.once('listening', () => {
+			resolve('closed');
+			s.close();
+		});
+		s.listen({
+			host: '150.230.35.105',
+			port: 25565,
+		});
 	});
-	// if the port is not being used
-	server.once('listening', function() {
-		server.close();
-		return 'closed';
-	});
-	// listen to the port
-	server.listen({
-		host: 'localhost',
-		port: 25565,
-	});
-}
+};
