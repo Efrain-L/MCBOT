@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { ping } = require('./pingserver');
+const { net } = require('net');
 const { exec } = require('child_process');
 
 module.exports = {
@@ -38,4 +38,24 @@ async function closeServer() {
 
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function ping() {
+	const server = net.createServer();
+	// if the port is being used
+	server.once('error', function(err) {
+		if (err.code === 'EADDRINUSE') {
+			return 'running';
+		}
+	});
+	// if the port is not being used
+	server.once('listening', function() {
+		server.close();
+		return 'closed';
+	});
+	// listen to the port
+	server.listen({
+		host: 'localhost',
+		port: 25565,
+	});
 }
