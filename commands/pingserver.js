@@ -8,7 +8,7 @@ module.exports = {
 	async execute(interaction) {
 		await interaction.deferReply();
 		const msg = await ping();
-		await interaction.editReply({ content: `The server is ${msg}` });
+		await interaction.editReply({ content: `The server is currently ${msg}` });
 	},
 };
 
@@ -17,8 +17,9 @@ const ping = async () => {
 		const s = net.createServer();
 		s.once('error', (err) => {
 			s.close();
-			if (err['code'] == 'EADDRINUSE') {
-				resolve('already running');
+			// console.log(err.code);
+			if (err.code === 'EADDRNOTAVAIL') {
+				resolve('running');
 			}
 			else {
 				resolve('closed');
