@@ -7,8 +7,9 @@ module.exports = {
 		.setName('startserver')
 		.setDescription('Will start the Minecraft server.'),
 	async execute(interaction) {
-		if (await ping() === 'running') {
-			await interaction.reply('The server is already running');
+		await interaction.deferReply({ ephemeral: true });
+		if (await ping() === 'already running') {
+			await interaction.editReply('The server is already running');
 		}
 		else {
 			await startServer();
@@ -16,9 +17,9 @@ module.exports = {
 			let started = false;
 			while (time < 180) {
 				console.log(`pinging (${time}s)...`);
-				if (await ping() == 'running') {
+				if (await ping() == 'already running') {
 					started = true;
-					await interaction.reply('Server has started.');
+					await interaction.editReply('Server has started.');
 					break;
 				}
 				// sleeps for 5000 ms or 5 seconds
@@ -26,7 +27,7 @@ module.exports = {
 				time += 5;
 			}
 			if (!started) {
-				await interaction.reply('The server took too long to start.');
+				await interaction.editReply('The server took too long to start.');
 			}
 		}
 	},
@@ -40,22 +41,25 @@ function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function ping() {
-	const server = net.createServer();
-	// if the port is being used
-	server.once('error', function(err) {
-		if (err.code === 'EADDRINUSE') {
-			return 'running';
-		}
+const ping = async () => {
+	return new Promise((resolve) => {
+		const s = net.createServer();
+		s.once('error', (err) => {
+			s.close();
+			if (err['code'] == 'EADDRINUSE') {
+				resolve('already running');
+			}
+			else {
+				resolve('closed');
+			}
+		});
+		s.once('listening', () => {
+			resolve('closed');
+			s.close();
+		});
+		s.listen({
+			host: '150.230.35.105',
+			port: 25565,
+		});
 	});
-	// if the port is not being used
-	server.once('listening', function() {
-		server.close();
-		return 'closed';
-	});
-	// listen to the port
-	server.listen({
-		host: 'localhost',
-		port: 25565,
-	});
-}
+};

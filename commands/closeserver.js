@@ -7,11 +7,11 @@ module.exports = {
 		.setName('closeserver')
 		.setDescription('Will close the Minecraft server.'),
 	async execute(interaction) {
+		await interaction.deferReply({ ephemeral: true });
 		if (await ping() != 'running') {
-			await interaction.reply('The server is already closed');
+			await interaction.editReply('The server is already closed');
 		}
 		else {
-			await interaction.reply('Closing the server...');
 			await closeServer();
 			let time = 0;
 			let closed = false;
@@ -19,14 +19,14 @@ module.exports = {
 				console.log(`pinging (${time}s)...`);
 				if (await ping() == 'closed') {
 					closed = true;
-					await interaction.reply('The server has been closed');
+					await interaction.editReply('The server has been closed');
 					break;
 				}
 				sleep(5000);
 				time += 5;
 			}
 			if (!closed) {
-				await interaction.reply('The server took too long to close.');
+				await interaction.editReply('The server took too long to close.');
 			}
 		}
 	},
