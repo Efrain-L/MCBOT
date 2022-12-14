@@ -11,15 +11,14 @@ module.exports = {
 			await interaction.reply('The server is already running');
 		}
 		else {
-			await interaction.reply('Starting the server...');
 			await startServer();
 			let time = 0;
 			let started = false;
 			while (time < 180) {
 				console.log(`pinging (${time}s)...`);
 				if (await ping() == 'running') {
-					await interaction.reply('Server has started.');
 					started = true;
+					await interaction.reply('Server has started.');
 					break;
 				}
 				// sleeps for 5000 ms or 5 seconds

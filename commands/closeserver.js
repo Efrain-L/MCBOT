@@ -18,8 +18,8 @@ module.exports = {
 			while (time < 180) {
 				console.log(`pinging (${time}s)...`);
 				if (await ping() == 'closed') {
-					await interaction.reply('The server has been closed');
 					closed = true;
+					await interaction.reply('The server has been closed');
 					break;
 				}
 				sleep(5000);

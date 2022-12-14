@@ -6,7 +6,6 @@ module.exports = {
 		.setName('pingserver')
 		.setDescription('Check if the surver is currently running.'),
 	async execute(interaction) {
-		await interaction.reply('Pinging the server...');
 		await interaction.reply(`The server is ${await ping()}`);
 	},
 };
