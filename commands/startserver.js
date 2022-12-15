@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
+const { ip, port } = require('./address.json');
 const { exec } = require('child_process');
 const net = require('net');
 
@@ -58,8 +59,8 @@ const ping = async () => {
 			s.close();
 		});
 		s.listen({
-			host: '150.230.35.105',
-			port: 25565,
+			host: ip,
+			port: port,
 		});
 	});
 };
