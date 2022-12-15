@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { ip, port } = require('./address.json');
 const { exec } = require('child_process');
 const net = require('net');
 
@@ -18,7 +17,7 @@ module.exports = {
 			let started = false;
 			while (time < 240) {
 				console.log(`pinging (${time}s)...`);
-				if (await ping() == 'running') {
+				if (await ping() === 'running') {
 					started = true;
 					await interaction.editReply('Server has started.');
 					break;
@@ -47,7 +46,7 @@ const ping = async () => {
 		const s = net.createServer();
 		s.once('error', (err) => {
 			s.close();
-			if (err.code === 'EADDRNOTAVAIL') {
+			if (err.code === 'EADDRINUSE') {
 				resolve('running');
 			}
 			else {
@@ -59,8 +58,8 @@ const ping = async () => {
 			s.close();
 		});
 		s.listen({
-			host: ip,
-			port: port,
+			host: 'localhost',
+			port: 25565,
 		});
 	});
 };

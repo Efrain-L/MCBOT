@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { ip, port } = require('./address.json');
 const { exec } = require('child_process');
 const net = require('net');
 
@@ -18,12 +17,12 @@ module.exports = {
 			let closed = false;
 			while (time < 240) {
 				console.log(`pinging (${time}s)...`);
-				if (await ping() == 'closed') {
+				if (await ping() === 'closed') {
 					closed = true;
 					await interaction.editReply('The server has been closed');
 					break;
 				}
-				sleep(5000);
+				await sleep(5000);
 				time += 5;
 			}
 			if (!closed) {
@@ -46,7 +45,7 @@ const ping = async () => {
 		const s = net.createServer();
 		s.once('error', (err) => {
 			s.close();
-			if (err.code === 'EADDRNOTAVAIL') {
+			if (err.code === 'EADDRINUSE') {
 				resolve('running');
 			}
 			else {
@@ -58,8 +57,8 @@ const ping = async () => {
 			s.close();
 		});
 		s.listen({
-			host: ip,
-			port: port,
+			host: 'localhost',
+			port: 25565,
 		});
 	});
 };
