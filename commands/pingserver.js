@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { ip, port } = require('./address.json');
 const net = require('net');
 
 module.exports = {
@@ -19,7 +18,7 @@ const ping = async () => {
 		s.once('error', (err) => {
 			s.close();
 			// console.log(err.code);
-			if (err.code === 'EADDRNOTAVAIL') {
+			if (err.code === 'EADDRINUSE') {
 				resolve('running');
 			}
 			else {
@@ -31,8 +30,8 @@ const ping = async () => {
 			s.close();
 		});
 		s.listen({
-			host: ip,
-			port: port,
+			host: 'localhost',
+			port: 25565,
 		});
 	});
 };
