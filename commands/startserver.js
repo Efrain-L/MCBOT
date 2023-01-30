@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { exec } = require('child_process');
+const { SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js');
 const net = require('net');
 
 module.exports = {
@@ -7,39 +6,34 @@ module.exports = {
 		.setName('startserver')
 		.setDescription('Will start the Minecraft server.'),
 	async execute(interaction) {
-		await interaction.deferReply();
+		// await interaction.deferReply();
 		if (await ping() === 'running') {
 			await interaction.editReply('The server is already running');
 		}
+		// otherwise, present the user with the selection menu
 		else {
-			await startServer();
-			let time = 0;
-			let started = false;
-			while (time < 240) {
-				console.log(`pinging (${time}s)...`);
-				if (await ping() === 'running') {
-					started = true;
-					await interaction.editReply('Server has started.');
-					break;
-				}
-				// sleeps for 5000 ms or 5 seconds
-				await sleep(5000);
-				time += 5;
-			}
-			if (!started) {
-				await interaction.editReply('The server took too long to start.');
-			}
+			const row = new ActionRowBuilder()
+				.addComponents(
+					new StringSelectMenuBuilder()
+						.setCustomId('start-select')
+						.setPlaceholder('Nothing selected')
+						.setMinValues(1)
+						.setMaxValues(1)
+						.addOptions(
+							{
+								label: 'Vault Hunters',
+								value: 'path',
+							},
+							{
+								label: 'Rustic Waters',
+								value: 'path',
+							},
+						),
+				);
+			await interaction.reply({ content: 'Select a Modpack to Start', components: [row] });
 		}
 	},
 };
-
-async function startServer() {
-	exec('tmux send -t 0:0 "sh run.sh" ENTER');
-}
-
-function sleep(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 const ping = async () => {
 	return new Promise((resolve) => {
