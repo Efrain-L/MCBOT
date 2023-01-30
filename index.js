@@ -16,16 +16,16 @@ const commandsFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(
 
 // Reading all of the command files
 for (const file of commandsFiles) {
-	const filePath = path.join(commandsPath, file);
-	const command = require(filePath);
-	// Place each command into the client's commands collection
-	if ('data' in command && 'execute' in command) {
-		client.commands.set(command.data.name, command);
-	}
-	// Error handling for when a command does not have the required properties
-	else {
-		console.log(`The command at ${filePath} is missing a "data" or "execute" property.`);
-	}
+    const filePath = path.join(commandsPath, file);
+    const command = require(filePath);
+    // Place each command into the client's commands collection
+    if ('data' in command && 'execute' in command) {
+        client.commands.set(command.data.name, command);
+    }
+    // Error handling for when a command does not have the required properties
+    else {
+        console.log(`The command at ${filePath} is missing a "data" or "execute" property.`);
+    }
 }
 
 // Reading all of the event files
@@ -33,15 +33,15 @@ const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 // Then setting up each of the events from the directory
 for (const file of eventFiles) {
-	const filePath = path.join(eventsPath, file);
-	const event = require(filePath);
-	// When an event occurs, it's execute function will be called
-	if (event.once) {
-		client.once(event.name, (...args) => event.execute(...args));
-	}
-	else {
-		client.on(event.name, (...args) => event.execute(...args));
-	}
+    const filePath = path.join(eventsPath, file);
+    const event = require(filePath);
+    // When an event occurs, it's execute function will be called
+    if (event.once) {
+        client.once(event.name, (...args) => event.execute(...args));
+    }
+    else {
+        client.on(event.name, (...args) => event.execute(...args));
+    }
 }
 
 // Logging in using the authentication token
