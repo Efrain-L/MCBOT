@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { exec } = require('child_process');
-const net = require('net');
+const { ping, sleep } = require('../server')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -8,11 +7,11 @@ module.exports = {
         .setDescription('Will close the Minecraft server.'),
     async execute(interaction) {
         await interaction.deferReply();
-        if (await ping() !== 'running') {
+        if (await server.ping() !== 'running') {
             await interaction.editReply('The server is already closed');
         }
         else {
-            await closeServer();
+            await closeCommand();
             let time = 0;
             let closed = false;
             while (time < 240) {
@@ -32,35 +31,8 @@ module.exports = {
     },
 };
 
-async function closeServer() {
+async function closeCommand() {
     exec('tmux send -t 0:0 "stop" ENTER');
     await sleep(3000);
     exec('tmux send -t 0:0 ^z');
 }
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-const ping = async () => {
-    return new Promise((resolve) => {
-        const s = net.createServer();
-        s.once('error', (err) => {
-            s.close();
-            if (err.code === 'EADDRINUSE') {
-                resolve('running');
-            }
-            else {
-                resolve('closed');
-            }
-        });
-        s.once('listening', () => {
-            resolve('closed');
-            s.close();
-        });
-        s.listen({
-            host: 'localhost',
-            port: 25565,
-        });
-    });
-};
