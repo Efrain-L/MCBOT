@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js');
 const net = require('net');
+const { ping } = require('../server');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -22,11 +23,11 @@ module.exports = {
                         .addOptions(
                             {
                                 label: 'Vault Hunters',
-                                value: 'path',
+                                value: 'path1',
                             },
                             {
                                 label: 'Rustic Waters',
-                                value: 'path',
+                                value: 'path2',
                             },
                         ),
                 );
