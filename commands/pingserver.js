@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const net = require('net');
+const { ping } = require('../server');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -10,28 +11,4 @@ module.exports = {
         const msg = await ping();
         await interaction.editReply({ content: `The server is currently ${msg}` });
     },
-};
-
-const ping = async () => {
-    return new Promise((resolve) => {
-        const s = net.createServer();
-        s.once('error', (err) => {
-            s.close();
-            // console.log(err.code);
-            if (err.code === 'EADDRINUSE') {
-                resolve('running');
-            }
-            else {
-                resolve('closed');
-            }
-        });
-        s.once('listening', () => {
-            resolve('closed');
-            s.close();
-        });
-        s.listen({
-            host: 'localhost',
-            port: 25565,
-        });
-    });
 };
