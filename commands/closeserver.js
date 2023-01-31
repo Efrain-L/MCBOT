@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { ping, sleep } = require('../server')
+const { ping, sleep } = require('../server');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -7,7 +7,7 @@ module.exports = {
         .setDescription('Will close the Minecraft server.'),
     async execute(interaction) {
         await interaction.deferReply();
-        if (await server.ping() !== 'running') {
+        if (await ping() !== 'running') {
             await interaction.editReply('The server is already closed');
         }
         else {
