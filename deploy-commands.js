@@ -1,6 +1,6 @@
 // Script to register the commands using the specified client and guild (discord server) from the config file
 const { REST, Routes } = require('discord.js');
-const { clientId, guildId, token } = require('./config.json');
+const { clientId, guildIds, token } = require('./config.json');
 // const token = process.env.token;
 const fs = require('node:fs');
 
@@ -25,10 +25,11 @@ console.log('swag');
     try {
         console.log(`Started refreshing ${commands.length} application (/) commands.`);
         // Deploying the commands to the bot's client and for each guild
-        // eslint-disable-next-line no-unused-vars
-        const data = await rest.put(
-            Routes.applicationGuildCommands(clientId, guildId), { body: commands },
-        );
+        guildIds.forEach(async (guildId) => {
+            const data = await rest.put(
+                Routes.applicationGuildCommands(clientId, guildId), { body: commands },
+            );
+        })
         console.log('Successfully reloaded slash commands.');
     }
     catch (error) {
