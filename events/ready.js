@@ -6,14 +6,14 @@ const { mongoURI } = require('../config.json');
 module.exports = {
     name: Events.ClientReady,
     once: true,
-    async execute(client) {
+    execute(client) {
         // If a URI for the database was not provided
         if (!mongoURI) {
             console.log('Missing database URI.');
             return;
         }
         // Connect to the database
-        await mongoose.connect(mongoURI, {
+        mongoose.connect(mongoURI, {
             keepAlive: true,
             useNewUrlParser: true,
         });
