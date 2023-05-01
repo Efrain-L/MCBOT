@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } = require('discord.js');
 const net = require('net');
 const { ping } = require('../server/utils');
 
@@ -18,17 +18,11 @@ module.exports = {
                     new StringSelectMenuBuilder()
                         .setCustomId('start-select')
                         .setPlaceholder('Nothing selected')
-                        .setMinValues(1)
-                        .setMaxValues(1)
                         .addOptions(
-                            {
+                            new StringSelectMenuOptionBuilder({
                                 label: 'Vault Hunters',
-                                value: '/home/opc/mcservers/vh3server',
-                            },
-                            {
-                                label: 'Rustic Waters',
-                                value: 'path2',
-                            },
+                                value: '/home/opc/mcservers/vh3server'
+                            }),
                         ),
                 );
             await interaction.reply({ content: 'Select a Modpack to Start', components: [row] });
