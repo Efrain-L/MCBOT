@@ -12,7 +12,7 @@ module.exports = {
             await interaction.editReply('The server is already closed');
         }
         else {
-            await serverCloser();
+            await serverCloser(interaction);
         }
     },
 };
