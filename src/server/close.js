@@ -23,7 +23,7 @@ const serverCloser = async function(interaction) {
 async function closeCommand() {
     exec('tmux send -t 0:0 "stop" ENTER');
     await sleep(3000);
-    exec('tmux send -t 0:0 ^z');
+    exec('tmux send -t 0:0 ^c');
 }
 
 module.exports = {
