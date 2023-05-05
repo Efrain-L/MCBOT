@@ -22,7 +22,8 @@ const serverCloser = async function(interaction) {
 
 async function closeCommand() {
     exec('tmux send -t 0:0 "stop" ENTER');
-    await sleep(3000);
+    // wait for 7.5 seconds
+    await sleep(7.5 * 1000);
     exec('tmux send -t 0:0 ^c');
 }
 
