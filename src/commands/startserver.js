@@ -23,6 +23,10 @@ module.exports = {
                                 label: 'Vault Hunters',
                                 value: '/home/opc/mcservers/vh3server'
                             }),
+                            new StringSelectMenuOptionBuilder({
+                                label: 'All The Mods 8',
+                                value: '/home/opc/mcservers/All-The-Mods-8-Server-Files-1.0.17'
+                            })
                         ),
                 );
             await interaction.reply({ content: 'Select a Modpack to Start', components: [row] });
