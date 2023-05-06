@@ -4,7 +4,7 @@ const net = require('net');
 
 const packs = [
     {
-        label: 'Vault Hunters',
+        label: 'Vault Hunters 3',
         value: '/home/opc/mcservers/vh3server'
     },
     {
