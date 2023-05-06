@@ -27,7 +27,7 @@ module.exports = {
         else if (interaction.isStringSelectMenu()) {
             // If the interaction is selecting a modpack option
             if (interaction.customId === 'start-select') {
-                await interaction.update({ content: 'Attempting to start the pack...', components: [] });
+                await interaction.update({ content: 'Attempting to start the server with the selected modpack...', components: [] });
                 let modPath = '';
                 // Get the path from the selection's value
                 await interaction.values.forEach(async value => {
