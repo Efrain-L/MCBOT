@@ -18,7 +18,12 @@ module.exports = {
                     new StringSelectMenuBuilder()
                         .setCustomId('start-select')
                         .setPlaceholder('Nothing selected')
-                        .addOptions(...packs)
+                        .addOptions(...packs.map((pack) => {
+                                new StringSelectMenuOptionBuilder()
+                                    .setLabel(pack.label)
+                                    .setValue(pack.value)
+                            })
+                        )
                 );
             await interaction.reply({ content: 'Select a Modpack to Start', components: [row] });
         }

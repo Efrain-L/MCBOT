@@ -2,18 +2,20 @@
 const { StringSelectMenuOptionBuilder } = require('discord.js');
 const net = require('net');
 
+const packs = [
+    {
+        label: 'Vault Hunters',
+        value: '/home/opc/mcservers/vh3server'
+    },
+    {
+        label: 'All The Mods 8',
+        value: '/home/opc/mcservers/All-The-Mods-8-Server-Files-1.0.17'
+    }
+];
+
 const sleep = function(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-const packs = [
-    new StringSelectMenuOptionBuilder()
-        .setLabel('Vault Hunters')
-        .setValue('/home/opc/mcservers/vh3server'),
-    new StringSelectMenuOptionBuilder()
-        .setLabel('All The Mods 8')
-        .setValue('/home/opc/mcservers/All-The-Mods-8-Server-Files-1.0.17')
-]
 
 const ping = async () => {
     return new Promise((resolve) => {
