@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } = require('discord.js');
 const net = require('net');
-const { ping } = require('../server/utils');
+const { ping, packs } = require('../server/utils');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -18,16 +18,7 @@ module.exports = {
                     new StringSelectMenuBuilder()
                         .setCustomId('start-select')
                         .setPlaceholder('Nothing selected')
-                        .addOptions(
-                            new StringSelectMenuOptionBuilder({
-                                label: 'Vault Hunters',
-                                value: '/home/opc/mcservers/vh3server'
-                            }),
-                            new StringSelectMenuOptionBuilder({
-                                label: 'All The Mods 8',
-                                value: '/home/opc/mcservers/All-The-Mods-8-Server-Files-1.0.17'
-                            })
-                        ),
+                        .addOptions(...packs)
                 );
             await interaction.reply({ content: 'Select a Modpack to Start', components: [row] });
         }

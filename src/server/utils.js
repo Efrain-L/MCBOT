@@ -1,9 +1,19 @@
 // This file holds all of the methods related to pinging the server
+const { StringSelectMenuOptionBuilder } = require('discord.js');
 const net = require('net');
 
 const sleep = function(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+const packs = [
+    new StringSelectMenuOptionBuilder()
+        .setLabel('Vault Hunters')
+        .setValue('/home/opc/mcservers/vh3server'),
+    new StringSelectMenuOptionBuilder()
+        .setLabel('All The Mods 8')
+        .setValue('/home/opc/mcservers/All-The-Mods-8-Server-Files-1.0.17')
+]
 
 const ping = async () => {
     return new Promise((resolve) => {
@@ -32,4 +42,5 @@ const ping = async () => {
 module.exports = {
     sleep,
     ping,
+    packs,
 }
