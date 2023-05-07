@@ -8,7 +8,7 @@ module.exports = {
     async execute(interaction) {
         let replyString = 'Here is a list of the modpacks on the server:\n';
         Array.from(packs.keys()).forEach(packName => {
-            replyString += `${packName}\n`;
+            replyString += `**${packName}**\n`;
         });
         await interaction.reply(replyString);
     },
