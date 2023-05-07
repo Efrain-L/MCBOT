@@ -31,7 +31,7 @@ module.exports = {
                 // Get the path from the selection's value
                 const packName = interaction.values[0];
                 const packPath = packs.get(packName);
-                await interaction.update({ content: `Attempting to start the ${packName} server...`, components: [] });
+                await interaction.update({ content: `Attempting to start the **${packName}** server...`, components: [] });
                 // Once the path has been retrieved, call the starter method
                 await serverStarter(interaction, packPath);
             }

@@ -11,7 +11,7 @@ const serverStarter = async function(interaction, modPath) {
         // console.log(`pinging (${time}s)...`);
         if (await ping() === 'running') {
             started = true;
-            await interaction.editReply('Server has started.');
+            await interaction.editReply(`The **${interaction.values[0]}** server has started.`);
             break;
         }
         // sleeps for 5000 ms or 5 seconds
