@@ -1,6 +1,7 @@
 // Event handler for the bot's interactions
 const { Events } = require('discord.js');
 const { serverStarter } = require('../server/start');
+const { packs } = require('../server/utils');
 
 module.exports = {
     name: Events.InteractionCreate,
@@ -27,14 +28,12 @@ module.exports = {
         else if (interaction.isStringSelectMenu()) {
             // If the interaction is selecting a modpack option
             if (interaction.customId === 'start-select') {
-                await interaction.update({ content: 'Attempting to start the server with the selected modpack...', components: [] });
-                let modPath = '';
                 // Get the path from the selection's value
-                await interaction.values.forEach(async value => {
-                    modPath += `${value}`;
-                });
+                const packName = interaction.values[0];
+                const packPath = packs.get(packName);
+                await interaction.update({ content: `Attempting to start the ${packName} server...`, components: [] });
                 // Once the path has been retrieved, call the starter method
-                await serverStarter(interaction, modPath);
+                await serverStarter(interaction, packPath);
             }
         }
     },

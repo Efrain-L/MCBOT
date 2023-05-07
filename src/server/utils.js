@@ -1,16 +1,11 @@
 // This file holds all of the methods related to pinging the server
 const net = require('net');
 
-const packs = [
-    {
-        label: 'Vault Hunters 3',
-        value: '/home/opc/mcservers/vh3server',
-    },
-    {
-        label: 'All The Mods 8',
-        value: '/home/opc/mcservers/All-The-Mods-8-Server-Files-1.0.17',
-    },
-];
+// packName : packPath
+const packs = new Map([
+    ['Vault Hunters 3', '/home/opc/mcservers/vh3server'],
+    ['All The Mods 8', '/home/opc/mcservers/All-The-Mods-8-Server-Files-1.0.17'],
+]);
 
 const sleep = function(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));

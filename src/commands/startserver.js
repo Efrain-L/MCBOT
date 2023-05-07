@@ -12,16 +12,17 @@ module.exports = {
         }
         // otherwise, present the user with the selection menu
         else {
+            const packOptions = Array.from(packs.keys());
             const row = new ActionRowBuilder()
                 .addComponents(
                     new StringSelectMenuBuilder()
                         .setCustomId('start-select')
                         .setPlaceholder('Nothing selected')
                         .addOptions(
-                            ...packs.map((pack) => (
+                            ...packOptions.map((packName) => (
                                 new StringSelectMenuOptionBuilder()
-                                    .setLabel(pack.label)
-                                    .setValue(pack.value)
+                                    .setLabel(packName)
+                                    .setValue(packName)
                             )),
                         ),
                 );
