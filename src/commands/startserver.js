@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } = require('discord.js');
-const net = require('net');
 const { ping, packs } = require('../server/utils');
 
 module.exports = {
@@ -23,8 +22,8 @@ module.exports = {
                                 new StringSelectMenuOptionBuilder()
                                     .setLabel(pack.label)
                                     .setValue(pack.value)
-                            ))
-                        )
+                            )),
+                        ),
                 );
             await interaction.reply({ content: 'Select a Modpack to Start', components: [row] });
         }

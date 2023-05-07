@@ -4,21 +4,21 @@ const { ping, sleep } = require('./utils');
 
 const serverCloser = async function(interaction) {
     await closeCommand();
-        let time = 0;
-        let closed = false;
-        while (time < 240) {
-            if (await ping() === 'closed') {
-                closed = true;
-                await interaction.editReply('The server has been closed');
-                break;
-            }
-            await sleep(5000);
-            time += 5;
+    let time = 0;
+    let closed = false;
+    while (time < 240) {
+        if (await ping() === 'closed') {
+            closed = true;
+            await interaction.editReply('The server has been closed');
+            break;
         }
-        if (!closed) {
-            await interaction.editReply('The server took too long to close.');
-        }
-}
+        await sleep(5000);
+        time += 5;
+    }
+    if (!closed) {
+        await interaction.editReply('The server took too long to close.');
+    }
+};
 
 async function closeCommand() {
     exec('tmux send -t 0:0 "stop" ENTER');
@@ -29,4 +29,4 @@ async function closeCommand() {
 
 module.exports = {
     serverCloser,
-}
+};

@@ -21,14 +21,14 @@ const serverStarter = async function(interaction, modPath) {
     if (!started) {
         await interaction.editReply('The server took too long to start.');
     }
-}
+};
 
 // Executes the starting shell commands
 const startCommand = async function(packPath) {
     exec(`tmux send -t 0:0 "cd ${packPath}" ENTER`);
     exec('tmux send -t 0:0 "sh run.sh" ENTER');
-}
+};
 
 module.exports = {
     serverStarter,
-}
+};
