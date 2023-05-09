@@ -5,6 +5,7 @@ const net = require('net');
 const packs = new Map([
     ['Vault Hunters 3', '/home/opc/mcservers/vh3server'],
     ['All The Mods 8', '/home/opc/mcservers/All-The-Mods-8-Server-Files-1.0.17'],
+    ['FTB University', '/home/opc/mcservers/FTB_University'],
 ]);
 
 const sleep = function(ms) {
