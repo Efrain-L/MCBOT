@@ -3,10 +3,11 @@ const net = require('net');
 
 // packName : packPath
 const packs = new Map([
-    ['Vault Hunters 3', '/home/opc/mcservers/vh3server'],
-    ['All The Mods 8', '/home/opc/mcservers/All-The-Mods-8-Server-Files-1.0.17'],
-    ['FTB University', '/home/opc/mcservers/FTB_University'],
-    ['Rustic Waters II', '/home/opc/mcservers/RusticWatersII-1.16Server'],
+    ['Vault Hunters 3', '~/mcservers/vh3server'],
+    ['All The Mods 8', '~/mcservers/All-The-Mods-8-Server-Files-1.0.17'],
+    ['FTB University', '~/mcservers/FTB_University'],
+    ['Rustic Waters II', '~/mcservers/RusticWatersII-1.16Server'],
+    ['Roguelike Adventures and Dungeons 2', '~/mcservers/RAD2-Serverpack-1.3'],
 ]);
 
 const sleep = function(ms) {
