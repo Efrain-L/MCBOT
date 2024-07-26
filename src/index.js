@@ -1,8 +1,6 @@
 // 'Imports'
-const { Client, Events, GatewayIntentBits, Collection } = require('discord.js');
+const { Client, GatewayIntentBits, Collection } = require('discord.js');
 const { token } = require('../config.json');
-const { exec } = require('node:child_process');
-const net = require('net');
 const fs = require('node:fs');
 const path = require('node:path');
 
