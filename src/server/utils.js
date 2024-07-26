@@ -1,14 +1,14 @@
 // This file holds all of the methods related to pinging the server
 const net = require('net');
+const fs = require('node:fs');
+const path = require('node:path');
 
-// packName : packPath
-const packs = new Map([
-    ['Vault Hunters 3', '~/mcservers/vh3server'],
-    ['All The Mods 8', '~/mcservers/All-The-Mods-8-Server-Files-1.0.17'],
-    ['FTB University', '~/mcservers/FTB_University'],
-    ['Rustic Waters II', '~/mcservers/RusticWatersII-1.16Server'],
-    ['Roguelike Adventures and Dungeons 2', '~/mcservers/RAD2-Serverpack-1.3'],
-]);
+// read server pack folder names from the mcservers directory
+const directoryPath = path.join(process.env.HOME, 'mcservers');
+const serverPacks = fs.readdirSync(directoryPath, { withFileTypes: true })
+    .filter(dir => dir.isDirectory());
+// map server pack names to its directory path
+const packs = new Map(serverPacks.map(dir => [dir.name, path.join(directoryPath, dir.name)]));
 
 const sleep = function(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
